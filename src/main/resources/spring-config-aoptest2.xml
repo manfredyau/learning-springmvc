@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx.xsd
+
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+    <bean id="xmlAspect" class="com.ssm.chapter10.xml.aspect.XmlAspect"/>
+    <bean id="roleService" class="com.ssm.chapter10.xml.service.impl.RoleServiceImpl"/>
+
+    <aop:aspectj-autoproxy/>
+    <tx:annotation-driven/>
+    <context:component-scan base-package="com.ssm.chapter10.multi"/>
+    <aop:config>
+        <!-- 引用 xmlAspect 作為切面 -->
+        <aop:aspect ref="xmlAspect">
+            <aop:pointcut id="printcut_role"
+                          expression="execution(* com.ssm.chapter10.xml.service.impl.RoleServiceImpl.printRole(..))"/>
+            <!--定義通知-->
+            <aop:before method="before"
+                        pointcut="execution(* com.ssm.chapter10.xml.service.impl.RoleServiceImpl.printRole(..)) and args(role)"/>
+
+            <aop:after method="after"
+                       pointcut-ref="printcut_role"/>
+
+            <aop:after-returning method="afterReturning"
+                                 pointcut-ref="printcut_role"/>
+
+            <aop:after-throwing method="afterThrowing"
+                                pointcut-ref="printcut_role"/>
+
+            <aop:around method="around" pointcut-ref="printcut_role"/>
+
+            <aop:declare-parents types-matching="com.ssm.chapter10.xml.service.impl.RoleServiceImpl+"
+                                 implement-interface="com.ssm.chapter10.aop.verifier.RoleVerifier"
+                                 default-impl="com.ssm.chapter10.aop.verifier.impl.RoleVerifierImpl"/>
+        </aop:aspect>
+    </aop:config>
+
+    <bean id="proxyFactoryBeanAspect" class="com.ssm.chapter10.aspect.ProxyFactoryBeanFactory"/>
+
+    <bean id="roleService_my" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="com.ssm.chapter10.game.service.RoleService"/>
+        <property name="target">
+            <bean class="com.ssm.chapter10.game.service.impl.RoleServiceImpl"/>
+        </property>
+
+        <property name="interceptorNames">
+            <list>
+                <value>proxyFactoryBeanAspect</value>
+            </list>
+        </property>
+    </bean>
+
+</beans>

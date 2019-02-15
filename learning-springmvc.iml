@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="Spring" name="Spring">
+      <configuration>
+        <fileset id="fileset2" name="ApplicationContext" removed="false">
+          <file>file://$MODULE_DIR$/src/main/resources/applicationContext.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/srpint-config-mybatis.xml</file>
+        </fileset>
+        <fileset id="fileset" name="Spring Config Aoptest2" removed="false">
+          <file>file://$MODULE_DIR$/src/main/resources/spring-config-aoptest2.xml</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/ssm/chapter10/aop/congig/AopConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/resources/applicationContext.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/spring-config-aoptest.xml</file>
+        </fileset>
+        <fileset id="fileset3" name="Spring Config 12" removed="false">
+          <file>file://$MODULE_DIR$/src/main/resources/spring-config-12.xml</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/ssm/chapter10/aop/congig/AopConfig.java</file>
+        </fileset>
+        <fileset id="fileset4" name="Spring Config Mybatis" removed="false">
+          <file>file://$MODULE_DIR$/src/main/resources/spring-config-mybatis.xml</file>
+        </fileset>
+      </configuration>
+    </facet>
+  </component>
+</module>
