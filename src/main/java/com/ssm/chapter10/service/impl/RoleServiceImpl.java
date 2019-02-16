@@ -30,6 +30,7 @@ public class RoleServiceImpl implements RoleService, ApplicationContextAware {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
     public int insertRoleList(List<Role> roleList) {
+        // 此處對 Spring 產生了依賴
         RoleService roleService = applicationContext.getBean(RoleService.class);
         int count = 0;
         for (Role role : roleList) {
