@@ -5,8 +5,12 @@ import com.ssm.chapter10.service.RoleListService;
 import com.ssm.chapter10.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-@Controller
+@Controller("controller2")
 public class RoleController {
     @Autowired
     private RoleService roleService;
@@ -14,6 +18,8 @@ public class RoleController {
     @Autowired
     private RoleListService roleListService;
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    //這個是示範不良的做法
     public void errorUseServices() {
         Role role1 = new Role();
         role1.setRoleName("role1");
@@ -24,5 +30,12 @@ public class RoleController {
         role2.setRoleName("role2");
         role2.setNote("note2");
         roleService.insertRole(role2);
+    }
+
+    @RequestMapping("/addRole")
+    @ResponseBody
+    public Role addRole(Role role) {
+        roleService.insertRole(role);
+        return role;
     }
 }

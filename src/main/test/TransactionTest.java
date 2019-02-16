@@ -1,3 +1,4 @@
+import com.ssm.chapter10.controller.RoleController;
 import com.ssm.chapter10.pojo.Role;
 import com.ssm.chapter10.service.RoleListService;
 import com.ssm.chapter10.service.RoleService;
@@ -37,5 +38,25 @@ public class TransactionTest {
         }
         int count = roleService.insertRoleList(roleList);
         System.err.println(count);
+    }
+
+    @Test
+    /*
+      13.8.1錯誤使用Service
+     */
+    public void test3() {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-config-mybatis.xml");
+        RoleController roleController = applicationContext.getBean(RoleController.class);
+        roleController.errorUseServices();
+        RoleService roleService = applicationContext.getBean(RoleService.class);
+       /* RoleListService roleListService = applicationContext.getBean(RoleListService.class);
+        ArrayList<Role> roles = new ArrayList<>();
+        for (int i = 1; i <= 2; i++) {
+            Role role = new Role();
+            role.setRoleName("role" + i);
+            role.setNote("note" + i);
+            roles.add(role);
+        }
+        roleListService.insertRoleList(roles);*/
     }
 }
